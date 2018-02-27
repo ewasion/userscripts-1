@@ -41,163 +41,135 @@ function createForm() //creates mass upload form
 
     document.getElementById("message_container").classList.replace("display-none", "display-block");
 
-    var uploadForm = document.getElementById("upload_form"); //get real upload form
-    var massUploadForm = uploadForm.cloneNode(true); //create mass upload form as clone of upload form
-    massUploadForm.id = "mass_upload_form";
-    container.getElementsByClassName("panel-body")[1].insertBefore(massUploadForm, uploadForm); //insert mass upload form
-
-    //modify chapter name field
-    var chapterNameField = document.createElement("textarea");
-    document.getElementById("chapter_name").replaceWith(chapterNameField);
-    chapterNameField.classList.add("form-control");
-    chapterNameField.setAttribute("id", "chapter_names");
-    chapterNameField.setAttribute("name", "chapter_names");
-    chapterNameField.setAttribute("placeholder", "nameForCh1\nnameForCh2\nnameForCh3");
-    var chapterNameLabel = chapterNameField.parentNode.previousSibling.previousSibling;
-    chapterNameLabel.setAttribute("for", "chapter_names");
-    chapterNameLabel.innerText = "Chapter Names";
-
-    //modify volume field
-    var volumeNumberField = document.createElement("textarea");
-    document.getElementById("volume_number").replaceWith(volumeNumberField);
-    volumeNumberField.classList.add("form-control");
-    volumeNumberField.setAttribute("id", "volume_numbers");
-    volumeNumberField.setAttribute("name", "volume_numbers");
-    volumeNumberField.setAttribute("placeholder", "volumeForCh1\nvolumeForCh2\nvolumeForCh3");
-    var volumeNumberLabel = volumeNumberField.parentNode.previousSibling.previousSibling;
-    volumeNumberLabel.setAttribute("for", "volume_numbers");
-    volumeNumberLabel.innerText = "Volume Numbers";
-
-    //modify chapter number field
-    var chapterNumberField = document.createElement("textarea");
-    document.getElementById("chapter_number").replaceWith(chapterNumberField);
-    chapterNumberField.classList.add("form-control");
-    chapterNumberField.setAttribute("id", "chapter_numbers");
-    chapterNumberField.setAttribute("name", "chapter_numbers");
-    chapterNumberField.setAttribute("placeholder", "ch1\nch2\nch3");
-    var chapterNumberLabel = chapterNumberField.parentNode.previousSibling.previousSibling;
-    chapterNumberLabel.setAttribute("for", "chapter_numbers");
-    chapterNumberLabel.innerText = "Chapter Numbers";
-
-    //modify delay field
-    var delayCheckbox = document.getElementById("group_delay");
-    delayCheckbox.setAttribute("id", "groups_delay");
-    delayCheckbox.setAttribute("name", "groups_delay");
-    var delayLabel = delayCheckbox.parentNode.parentNode.parentNode.previousSibling.previousSibling;
-    delayLabel.setAttribute("for", "groups_delay");
-    delayLabel.innerText = "Apply groups delay";
-    delayCheckbox.addEventListener("click", function()
+    var massUploadForm = document.createElement("form");
+    container.getElementsByClassName("panel-body")[1].insertBefore(massUploadForm, document.getElementById("upload_form")); //get real upload form); //insert mass upload form
+    massUploadForm.outerHTML = '<form style="margin-top: 15px;" id="mass_upload_form" method="post" class="form-horizontal" enctype="multipart/form-data">' +
+'               <div class="form-group">' +
+'                    <label for="manga_id" class="col-sm-3 control-label">Manga name</label>' +
+'                    <div class="col-sm-9">' +
+'                        <input type="text" class="form-control" title="To change the manga, go to the manga page." disabled="" value="TEST">' +
+'                        <input type="hidden" id="manga_id" name="manga_id" value="47">' +
+'                    </div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    <label for="chapter_names" class="col-sm-3 control-label">Chapter Names</label>' +
+'                    <div class="col-sm-9">' +
+'                        <textarea class="form-control" id="chapter_names" name="chapter_names" placeholder="nameForCh1\n' +
+'nameForCh2\n' +
+'nameForCh3"></textarea>' +
+'                    </div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    <label for="volume_numbers" class="col-sm-3 control-label">Volume Numbers</label>' +
+'                    <div class="col-sm-9">' +
+'                        <textarea class="form-control" id="volume_numbers" name="volume_numbers" placeholder="volumeForCh1\n' +
+'volumeForCh2\n' +
+'volumeForCh3"></textarea>' +
+'                    </div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    <label for="chapter_numbers" class="col-sm-3 control-label">Chapter Numbers</label>' +
+'                    <div class="col-sm-9">' +
+'                        <textarea class="form-control" id="chapter_numbers" name="chapter_numbers" placeholder="ch1\n' +
+'ch2\n' +
+'ch3"></textarea>' +
+'                    </div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    <label for="groups_delay" class="col-sm-3 control-label">Apply groups delay</label>' +
+'                    <div class="col-sm-9">   ' +
+'                        <div class="checkbox">  ' +
+'                            <label><input type="checkbox" name="groups_delay" id="groups_delay" value="1"> Use for new releases!</label> ' +
+'                        </div>' +
+'                    </div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    <label for="groups_id" class="col-sm-3 control-label">Groups 1</label>' +
+'                    <div class="col-sm-9">   ' +
+'                        <textarea class="form-control" id="groups_id" name="groups_id" placeholder="Use dropdown in the bottom form or insert group IDs (NOT NAME) here"></textarea>' +
+'                    </div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    <label for="groups_id_2" class="col-sm-3 control-label">Groups 2</label>' +
+'                    <div class="col-sm-9">   ' +
+'                        <textarea class="form-control" id="groups_id_2" name="groups_id_2" placeholder="Use dropdown in the bottom form or insert group IDs (NOT NAME) here"></textarea>' +
+'                    </div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    <label for="groups_id_3" class="col-sm-3 control-label">Groups 3</label>' +
+'                    <div class="col-sm-9">   ' +
+'                        <textarea class="form-control" id="groups_id_3" name="groups_id_3" placeholder="Use dropdown in the bottom form or insert group IDs (NOT NAME) here"></textarea>' +
+'                    </div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    <label for="langs_id" class="col-sm-3 control-label">Languages</label>' +
+'                    <div class="col-sm-9">   ' +
+'                        <textarea class="form-control" id="langs_id" name="langs_id" disabled="true" placeholder="not implemented because no one mass uploads multiple languages, fill in the language in the bottom form instead"></textarea>' +
+'                    </div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    <label for="files" class="col-sm-3 control-label">Files</label>' +
+'                    <div class="col-sm-9">' +
+'                        <div class="input-group">' +
+'                            <input type="text" class="form-control" placeholder="No files selected" readonly="" disabled="">' +
+'                            <span class="input-group-btn">' +
+'                                <span class="btn btn-default btn-file">' +
+'                                    <span class="far fa-folder-open fa-fw" aria-hidden="true" title=""></span> <span class="span-1280">Browse</span> <input type="file" name="files" id="files" multiple="">' +
+'                                </span>' +
+'                            </span>' +
+'                        </div>' +
+'                    </div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    ' +
+'                    <div class="col-sm-12 text-right btn-toolbar">' +
+'                        <button type="button" class="btn btn-success pull-right" id="mass_upload_button" data-vivaldi-spatnav-clickable="1"><span class="fas fa-upload fa-fw" aria-hidden="true" title=""></span> <span class="span-1280">Mass Upload</span></button>' +
+'                    <button type="reset" class="btn btn-warning pull-right" id="mass_reset_button" data-vivaldi-spatnav-clickable="1"><span class="fas fa-trash-alt fa-fw" aria-hidden="true" title=""></span> <span class="span-1280">Reset Form</span></button></div>' +
+'                </div>' +
+'                <div class="form-group">' +
+'                    <div class="col-sm-offset-3 col-sm-9 text-right">' +
+'                        <div class="progress" style="height: 38px; display: none;">' +
+'                            <div id="progressbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width: 0%;" class="progress-bar progress-bar-info"></div>' +
+'                        </div>' +
+'                    </div>' +
+'                </div>' +
+'            </form>';
+    //add event listeners
+    document.getElementById("groups_delay").addEventListener("click", function()
                                             {
                                                 document.getElementById("group_delay").checked = this.checked;
                                             });
-    
-
-    //modify the group 1 field
-    var group1Field = document.createElement("textarea");
-    document.getElementById("group_id").parentNode.replaceWith(group1Field);
-    group1Field.classList.add("form-control");
-    group1Field.setAttribute("id", "groups_id");
-    group1Field.setAttribute("name", "groups_id");
-    group1Field.setAttribute("placeholder", "Use dropdown in the bottom form or insert group IDs (NOT NAME) here");
-    var group1Label = group1Field.parentNode.previousSibling.previousSibling;
-    group1Label.setAttribute("for", "groups_id");
-    group1Label.innerText = "Groups 1";
     document.getElementById("group_id").addEventListener("change", function()
                                                                     {
-                                                                        group1Field.value = this.value;
+                                                                        document.getElementById("groups_id").value = this.value;
                                                                         this.previousSibling.previousSibling.childNodes[0].childNodes[1].data += " id: " + this.value;
                                                                     });
-
-    //modify the group 2 field
-    var group2Field = document.createElement("textarea");
-    document.getElementById("group_id_2").parentNode.replaceWith(group2Field);
-    group2Field.classList.add("form-control");
-    group2Field.setAttribute("id", "groups_id_2");
-    group2Field.setAttribute("name", "groups_id_2");
-    group2Field.setAttribute("placeholder", "Use dropdown in the bottom form or insert group IDs (NOT NAME) here");
-    var group2Label = group2Field.parentNode.previousSibling.previousSibling;
-    group2Label.setAttribute("for", "groups_id_2");
-    group2Label.innerText = "Groups 2";
     document.getElementById("group_id_2").addEventListener("change", function()
                                                                     {
-                                                                        group2Field.value = this.value;
+                                                                        document.getElementById("groups_id_2").value = this.value;
                                                                         this.previousSibling.previousSibling.childNodes[0].childNodes[1].data += " id: " + this.value;
                                                                     });
-
-    //modify the group 3 field
-    var group3Field = document.createElement("textarea");
-    document.getElementById("group_id_3").parentNode.replaceWith(group3Field);
-    group3Field.classList.add("form-control");
-    group3Field.setAttribute("id", "groups_id_3");
-    group3Field.setAttribute("name", "groups_id_3");
-    group3Field.setAttribute("placeholder", "Use dropdown in the bottom form or insert group IDs (NOT NAME) here");
-    var group3Label = group3Field.parentNode.previousSibling.previousSibling;
-    group3Label.setAttribute("for", "groups_id_3");
-    group3Label.innerText = "Groups 3";
     document.getElementById("group_id_3").addEventListener("change", function()
                                                                     {
-                                                                        group3Field.value = this.value;
+                                                                        document.getElementById("groups_id_3").value = this.value;
                                                                         this.previousSibling.previousSibling.childNodes[0].childNodes[1].data += " id: " + this.value;
                                                                     });
-
-    //modify the language field
-    var languageField = document.createElement("textarea"); //clone a non-dropdown because fuck that
-    document.getElementById("lang_id").parentNode.replaceWith(languageField);
-    languageField.classList.add("form-control");
-    languageField.setAttribute("id", "langs_id");
-    languageField.setAttribute("name", "langs_id");
-    languageField.setAttribute("disabled", "true");
-    languageField.setAttribute("placeholder", "not implemented because no one mass uploads multiple languages, fill in the language in the bottom form instead");
-    var languageLabel = languageField.parentNode.previousSibling.previousSibling;
-    languageLabel.setAttribute("for", "langs_id");
-    languageLabel.innerText = "Languages";
-    
-
-    //modify the file field
-    var fileField = document.getElementById("file");
-    fileField.setAttribute("id", "files");
-    fileField.setAttribute("name", "files");
-    fileField.setAttribute("multiple", "");
-    var fileText = fileField.parentNode.parentNode.previousSibling.previousSibling;
-    fileText.setAttribute("placeholder", "No files selected");
-    var fileLabel = fileField.parentNode.parentNode.parentNode.parentNode.previousSibling.previousSibling;
-    fileLabel.setAttribute("for", "files");
-    fileLabel.innerText = "Files";
-    fileField.addEventListener("change", function()
-                                        {
-                                            if(this.files.length == 1)
+    document.getElementById("files").addEventListener("change", function()
+                                                                {
+                                                                    if(this.files.length == 1)
+                                                                    {
+                                                                        document.getElementById("files").parentNode.parentNode.previousSibling.previousSibling.value = this.files.length + " file selected";
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        document.getElementById("files").parentNode.parentNode.previousSibling.previousSibling.value = this.files.length + " files selected";
+                                                                    }
+                                                                    document.getElementById("mass_upload_button").focus();
+                                                                });
+    document.getElementById("mass_upload_button").addEventListener("click", function(event)
                                             {
-                                                fileText.value = this.files.length + " file selected";
-                                            }
-                                            else
-                                            {
-                                                fileText.value = this.files.length + " files selected";
-                                            }
-                                            uploadButton.focus();
-                                        });
-
-    //modify buttons
-    var uploadButton = document.getElementById("upload_button");
-    var uploadButtonContainer = uploadButton.parentNode;
-    uploadButtonContainer.parentNode.removeChild(uploadButtonContainer.previousSibling.previousSibling); //delete redundant back button
-    uploadButtonContainer.classList.replace("col-sm-6", "col-sm-12"); //make upload button container occupy space previously occupied by back button container
-    uploadButtonContainer.classList.add("btn-toolbar"); //need muh button spacing
-    uploadButton.setAttribute("type", "button");
-    uploadButton.classList.replace("btn-default", "btn-success");
-    uploadButton.classList.add("pull-right");
-    uploadButton.setAttribute("id", "mass_upload_button");
-    uploadButton.childNodes[2].innerText = "Mass Upload";
-    uploadButton.addEventListener("click", function(event)
-                                            {
-                                                massUpload(event, [chapterNameField, volumeNumberField, chapterNumberField, group1Field, group2Field, group3Field, fileField]);
+                                                massUpload(event, [document.getElementById("chapter_names"), document.getElementById("volume_numbers"), document.getElementById("chapter_numbers"), document.getElementById("groups_id"), document.getElementById("groups_id_2"), document.getElementById("groups_id_3"), document.getElementById("files")]);
                                             });
-    var resetButton = uploadButton.cloneNode(true);
-    resetButton.setAttribute("type", "reset");
-    resetButton.setAttribute("id", "mass_reset_button");
-    resetButton.classList.replace("btn-success", "btn-warning");
-    resetButton.childNodes[0].classList.replace("fa-upload", "fa-trash-alt");
-    resetButton.childNodes[2].innerText = "Reset Form";
-    uploadButtonContainer.appendChild(resetButton);
 }
 
 function massUpload(event, fields)
